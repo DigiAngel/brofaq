@@ -46,15 +46,18 @@ to your local.bro
 
 ## Disable entry types in in a log
 Add a new function to local.bro like the below:
+~~~
 function filter_weird (rec: Weird::Info) : bool
       {
       return /binpac exception/ ! in rec$name;
       }
-
+~~~
 Then add the below fo your already existing bro_init, or create new one like below:
+~~~
 event bro_init()
       {
       local filter: Log::Filter = Log::get_filter(Weird::LOG, "default");
       filter$pred=filter_weird;
       Log::add_filter(Weird::LOG, filter);
       }
+~~~
